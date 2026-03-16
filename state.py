@@ -6,9 +6,12 @@ class TODO(TypedDict):
     status:Literal['pending','in_process','completed']
 
 
-
+def todos_reducer(left,right):
+    if right is None:
+        return left
+    return right
 class Agent(AgentState):
-    todos:NotRequired[list[TODO]]
+    todos:Annotated[NotRequired[list[TODO]], todos_reducer]
 
 
 

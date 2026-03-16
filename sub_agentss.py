@@ -29,7 +29,7 @@ def _create_task_tool(tools,subagents:list[SubAgent],model,state_schema):
             _tools = [tools_name[t] for t in t['tools']]
         else:
             _tools = tools
-        agents[t['name']]=create_agent(model=model,system_prompt=agents['prompt'],tools=_tools,state_schema=state_schema)
+        agents[t['name']]=create_agent(model=model,system_prompt=t['prompt'],tools=_tools,state_schema=state_schema)
 
     other_agents = [f' {_agenti['name']} : {_agenti['description']} ' for _agenti in subagents ]
 

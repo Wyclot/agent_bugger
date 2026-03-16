@@ -10,13 +10,22 @@ from prompts import WRITE_TODOS_DESCRIPTION
 from state import AgentState, TODO
 
 
+
 @tool(description=WRITE_TODOS_DESCRIPTION)
-def write_todo(todos:TODO,tool_id:[str,InjectedToolCallId]):
-    return Command(update={'todos':todos,'messages':[ToolMessage(f"Updated todo list to {todos}", tool_call_id=tool_id)
-                                                           ]
-                           }
-                   )
-@tool(parse_docstring=True)
+def write_todo(
+    todos: list[dict],
+    tool_id: Annotated[str, InjectedToolCallId]
+) -> Command:
+    return Command(
+        update={
+            'todos': todos,
+            'messages': [ToolMessage(
+                content=f"Updated todo list to {todos}",
+                tool_call_id=tool_id
+            )]
+        }
+    )
+@tool
 def read_todo(state:Annotated[AgentState,InjectedState]):
     """Read the current TODO list from the agent state.
 

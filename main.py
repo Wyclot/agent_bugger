@@ -46,17 +46,17 @@ task_tool = _create_task_tool(
 
 all_tools = [save_repo, ls, read_file, write_file, write_todo, read_todo, task_tool]
 
-# создаём агента
+
 agent = create_agent(
     model=model,
     tools=all_tools,
-    prompt=AGENT_PROMPT,
+    system_prompt=AGENT_PROMPT,
     state_schema=Agent
 )
 
 
 response = agent.invoke({
-    "messages": [HumanMessage(content="https://github.com/user/repo")]
+    "messages": [HumanMessage(content="https://github.com/Wyclot/for_agent")]
 })
 
 print(response["messages"][-1].content)
